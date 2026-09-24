@@ -1,5 +1,4 @@
 #include <iostream>
-
 #include "zoo.h"
 
 Animal::Animal() = default;
