@@ -24,6 +24,15 @@ Vector18::Vector18(std::size_t size, double value)
     }
 }
 
+Vector18::Vector18(std::initializer_list<double> values)
+    : size_(values.size()), data_(new double[values.size()])
+{
+    for (std::size_t i = 0; i < size_; ++i)
+    {
+        data_[i] = *(values.begin() + i);
+    }
+}
+
 Vector18::~Vector18()
 {
     delete[] data_;

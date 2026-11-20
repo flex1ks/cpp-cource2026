@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstddef>
+#include <initializer_list>
 
 class Vector18
 {
@@ -8,6 +9,7 @@ public:
     Vector18(); // Конструктор по умолчанию
     explicit Vector18(std::size_t size); // Конструктор с размером
     Vector18(std::size_t size, double value); // Конструктор с размером и значением
+    Vector18(std::initializer_list<double> values);
 
     ~Vector18(); // Деструктор
 
