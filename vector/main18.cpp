@@ -46,5 +46,11 @@ int main()
         std::cout << "caught: " << e.what() << '\n';
     }
 
+    Vector18 d {1.0, 3.4, 5.6, 17,2};
+    std::cout << "d: ";
+    for (std::size_t i = 0; i < d.size(); ++i)
+    {
+        std::cout << d[i] << std::endl;
+    }
     return 0;
 }
