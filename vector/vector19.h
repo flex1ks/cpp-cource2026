@@ -4,6 +4,7 @@
 #include <memory>
 #include <stdexcept>
 #include <utility>
+#include <initializer_list>
 
 template<typename T, typename A = std::allocator<T>>
 class Vector19
@@ -11,7 +12,8 @@ class Vector19
 public:
     Vector19();                                          // Конструктор по умолчанию
     explicit Vector19(std::size_t capacity);             // Конструктор с емкостью
-    Vector19(std::size_t size, const T& value);          // Конструктор с размером и значением
+    Vector19(std::size_t size, const T& value);
+    Vector19(std::initializer_list<T> values);          // Конструктор с размером и значением
 
     ~Vector19();                                         // Деструктор
 
@@ -67,6 +69,23 @@ inline Vector19<T, A>::Vector19(std::size_t size, const T& value)
     for (std::size_t i = 0; i < size_; ++i)
     {
         alloc_.construct(&data_[i], value);
+    }
+}
+
+template<typename T, typename A>
+inline Vector19<T, A>::Vector19(std::initializer_list<T> values)
+    : alloc_(), size_(values.size()), capacity_(values.size()), data_(nullptr)
+{
+    if (values.size() == 0)
+        return;
+
+    data_ = alloc_.allocate(values.size());
+
+    std::size_t i = 0;
+    for (const T& x : values)
+    {
+        alloc_.construct(&data_[i], x);
+        ++i;
     }
 }
 
@@ -246,7 +265,7 @@ inline void Vector19<T, A>::pushBack(const T& value)
 {
     if (size_ == capacity_)
     {
-        std::size_t newCapacity = capacity_ ? capacity_ * 2 : 1;
+        std::size_t newCapacity = capacity_ ? capacity_ * 2 : 8;
         reserve(newCapacity);
     }
     alloc_.construct(&data_[size_], value);
